@@ -67,37 +67,69 @@
 
         default_layer {
             bindings = <
-&kp Q          &kp W        &kp E         &kp R        &kp T    &mo L1         &mo L1             &kp Y     &kp U      &kp I      &kp O          &kp P
-&kp A          &hml LALT S  &hml LCTRL D  &hml LGUI F  &kp G    &mo L3         &mo L3             &kp H     &kp J      &kp K      &kp L          &mt RCTRL SEMI
-&hml LSHIFT Z  &kp X        &kp C         &kp V        &kp B    &mo L2         &mo L2             &kp N     &kp M      &kp COMMA  &hmr RALT DOT  &hmr RSHIFT SLASH
-                                          &kp ESC      &mo L2   &mt LGUI TAB   &mt RSHIFT SPACE   &mo L1    &kp RGUI
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|  Q             |  W             |  E             |  R             |  T             |                |    |                |  Y             |  U             |  I             | O              |  P             |
+  &kp Q            &kp W            &kp E            &kp R            &kp T            &mo L1                &mo L1           &kp Y            &kp U            &kp I            &kp O            &kp P
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  A             |  S             |  D             |  F             |  G             |                |    |                |  H             |  J             |  K             | L              |  ;             |
+  &kp A            &hml LALT S      &hml LCTRL D     &hml LGUI F      &kp G            &mo L3                &mo L3           &kp H            &kp J            &kp K            &kp L            &mt RCTRL SEMI
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  Z             |  X             |  C             |  V             |  B             |                |    |                |  N             |  M             |  ,             | .              |  /             |
+  &hml LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo L2                &mo L2           &kp N            &kp M            &kp COMMA        &hmr RALT DOT    &hmr RSHIFT SLASH
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &kp ESC          &mo L2           &mt LGUI TAB          &mt RSHIFT SPACE &mo L1           &kp RGUI
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
 
         layer_1 {
             bindings = <
-&kp KP_DIVIDE      &kp KP_N7        &kp KP_N8         &kp KP_N9        &kp KP_MINUS   &trans               &bootloader  &none     &kp BACKSPACE  &kp DEL      &kp TAB        &kp MINUS
-&kp KP_MULTIPLY    &hml LALT KP_N4  &hml LCTRL KP_N5  &hml LGUI KP_N6  &kp KP_PLUS    &trans               &trans       &kp LEFT  &kp DOWN       &kp UP       &kp RIGHT      &mt RCTRL ENTER
-&hml LSHIFT KP_N0  &kp KP_N1        &kp KP_N2         &kp KP_N3        &kp EQUAL      &trans               &trans       &kp HOME  &kp PAGE_DOWN  &kp PAGE_UP  &hmr RALT END  &kp RSHIFT
-                                                      &kp SPACE        &lt L3 KP_DOT  &mt LGUI BACKSPACE   &none        &none     &trans
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|  /             |  7             |  8             |  9             |  -             |                |    |                |                |                |                |                |  -             |
+  &kp KP_DIVIDE    &kp KP_N7        &kp KP_N8        &kp KP_N9        &kp KP_MINUS     &trans                &bootloader      &none            &kp BACKSPACE    &kp DEL          &kp TAB          &kp MINUS
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  *             |  4             |  5             |  5             |  6             |                |    |                |                |                |                |                |                |
+  &kp KP_MULTIPLY  &hml LALT KP_N4  &hml LCTRL KP_N5 &hml LGUI KP_N6  &kp KP_PLUS      &trans                &trans           &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &mt RCTRL ENTER
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  0             |  1             |  2             |  3             |  =             |                |    |                |                |                |                |                |                |
+  &hml LSHIFT KP_N0 &kp KP_N1       &kp KP_N2        &kp KP_N3        &kp KP_EQUAL     &trans                &trans           &kp HOME         &kp PAGE_DOWN    &kp PAGE_UP      &hmr RALT END    &kp RSHIFT
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &kp SPACE        &lt L3 KP_DOT    &mt LGUI BACKSPACE    &none            &none            &trans
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
 
         layer_2 {
             bindings = <
-&kp QUESTION  &kp DOUBLE_QUOTES  &kp EXCLAMATION  &kp BACKSPACE  &kp TILDE      &bootloader   &trans             &none          &kp UNDERSCORE  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PERCENT
-&kp AT_SIGN   &kp SINGLE_QUOTE   &kp DOLLAR       &kp DELETE     &kp SLASH      &trans        &trans             &kp HASH       &none           &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &none
-&none         &kp GRAVE          &kp CARET        &kp PIPE       &kp BACKSLASH  &trans        &trans             &kp AMPERSAND  &none           &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp RSHIFT
-                                                  &none          &none          &none         &mt RSHIFT ENTER   &mo L3         &trans
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|  ?             |  "             |  !             |                |  ~             |                |    |                |                |  _             |  (             |  )             |  %             |
+  &kp QUESTION     &kp DOUBLE_QUOTES &kp EXCLAMATION &kp BACKSPACE    &kp TILDE        &bootloader           &trans           &none            &kp UNDERSCORE   &kp LEFT_PARENTHESIS &kp RIGHT_PARENTHESIS &kp PERCENT
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  @             |  '             |  $             |                |  /             |                |    |                |  #             |                |  [             |  ]             |                |
+  &kp AT_SIGN      &kp SINGLE_QUOTE &kp DOLLAR       &kp DELETE       &kp SLASH        &trans                &trans           &kp HASH         &none            &kp LEFT_BRACKET &kp RIGHT_BRACKET &none
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|                |  `             |  ^             |  |             |  \             |                |    |                |  &             |                |  {             |  }             |                |
+  &none            &kp GRAVE        &kp CARET        &kp PIPE         &kp BACKSLASH    &trans                &trans           &kp AMPERSAND    &none            &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp RSHIFT
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &none            &none            &none                 &mt RSHIFT ENTER &mo L3           &trans
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
 
         layer_3 {
             bindings = <
-&kp C_MUTE         &kp F7  &kp F8  &kp F9         &kp F12         &kp LG(LS(N3))   &bt BT_SEL 2  &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT     &kp LG(LS(N5))
-&kp C_VOLUME_UP    &kp F4  &kp F5  &kp F6         &kp F11         &kp LG(LS(N4))   &bt BT_SEL 1  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT     &kp C_BRIGHTNESS_INC
-&kp C_VOLUME_DOWN  &kp F1  &kp F2  &kp F3         &kp F10         &kp LG(LS(N5))   &bt BT_SEL 0  &none           &kp LGUI        &kp LCTRL     &kp LALT            &hmr LSHIFT C_BRIGHTNESS_DEC
-                                   &kp LG(LC(Q))  &studio_unlock  &kp LOCKING_NUM  &mkp MB1      &mkp MB3        &mkp MB2
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|                |  F7            |  F8            |  F9            |  F12           |                |    |                |                |                |                |                |                |
+  &kp C_MUTE       &kp F7           &kp F8           &kp F9           &kp F12          &kp LG(LS(N3))        &bt BT_SEL 2     &msc SCRL_LEFT   &msc SCRL_DOWN   &msc SCRL_UP     &msc SCRL_RIGHT  &kp LG(LS(N5))
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|                |  F4            |  F5            |  F6            |  F11           |                |    |                |                |                |                |                |                |
+  &kp C_VOLUME_UP  &kp F4           &kp F5           &kp F6           &kp F11          &kp LG(LS(N4))        &bt BT_SEL 1     &mmv MOVE_LEFT   &mmv MOVE_DOWN   &mmv MOVE_UP     &mmv MOVE_RIGHT  &kp C_BRIGHTNESS_INC
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|                |  F1            |  F2            |  F3            |  F10           |                |    |                |                |                |                |                |                |
+  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp LG(LS(N5))        &bt BT_SEL 0     &none            &kp LGUI         &kp LCTRL        &kp LALT         &hmr LSHIFT C_BRIGHTNESS_DEC
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &kp LG(LC(Q))    &studio_unlock   &kp LOCKING_NUM       &mkp MB1         &mkp MB3         &mkp MB2
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
     };
