@@ -14,6 +14,10 @@
 #define ADJUST  3
 #define WIN_DEFAULT 4
 
+#define BT_MAC  0
+#define BT_WIN  1
+#define BT_IPAD 2
+
 #define LEFT_TOP      0  1  2  3  4  5
 #define RIGHT_TOP     6  7  8  9 10 11
 #define LEFT_MID     12 13 14 15 16 17
@@ -62,6 +66,35 @@
             tapping-term-ms = <200>;
             quick-tap-ms = <0>;
             bindings = <&kp>, <&kp>;
+        };
+    };
+
+    macro {
+        bt_to_mac: bt_to_mac {
+            label = "bt_to_mac_macro";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&to MAC_DEFAULT>, <&bt BT_SEL BT_MAC>;
+        };
+
+        bt_to_win: bt_to_win {
+            label = "bt_to_win_macro";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&to WIN_DEFAULT>, <&bt BT_SEL BT_WIN>;
+        };
+
+        bt_to_ipad: bt_to_ipad {
+            label = "bt_to_ipad_macro";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&to MAC_DEFAULT>, <&bt BT_SEL BT_IPAD>;
         };
     };
 
@@ -149,13 +182,13 @@
             bindings = <
 //╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
 //|                |  F7            |  F8            |  F9            |  F12           |                |    |                |                |                |                |                |                |
-  &kp C_MUTE       &kp F7           &kp F8           &kp F9           &kp F12          &kp CAPTURE_1         &bt BT_SEL 2     &msc SCRL_LEFT   &msc SCRL_DOWN   &msc SCRL_UP     &msc SCRL_RIGHT  &kp CAPTURE_3
+  &kp C_MUTE       &kp F7           &kp F8           &kp F9           &kp F12          &kp CAPTURE_1         &bt_to_ipad      &msc SCRL_LEFT   &msc SCRL_DOWN   &msc SCRL_UP     &msc SCRL_RIGHT  &kp CAPTURE_3
 //├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 //|                |  F4            |  F5            |  F6            |  F11           |                |    |                |                |                |                |                |                |
-  &kp C_VOLUME_UP  &kp F4           &kp F5           &kp F6           &kp F11          &kp CAPTURE_2         &bt BT_SEL 1     &mmv MOVE_LEFT   &mmv MOVE_DOWN   &mmv MOVE_UP     &mmv MOVE_RIGHT  &kp C_BRIGHTNESS_INC
+  &kp C_VOLUME_UP  &kp F4           &kp F5           &kp F6           &kp F11          &kp CAPTURE_2         &bt_to_win       &mmv MOVE_LEFT   &mmv MOVE_DOWN   &mmv MOVE_UP     &mmv MOVE_RIGHT  &kp C_BRIGHTNESS_INC
 //├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 //|                |  F1            |  F2            |  F3            |  F10           |                |    |                |                |                |                |                |                |
-  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp CAPTURE_3         &bt BT_SEL 0     &none            &kp LGUI         &kp LCTRL        &kp LALT         &hmr LSHIFT C_BRIGHTNESS_DEC
+  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp CAPTURE_3         &bt_to_mac       &none            &kp LGUI         &kp LCTRL        &kp LALT         &hmr LSHIFT C_BRIGHTNESS_DEC
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
                                                      LOCK             SWITCH_OS        UNLOCK                &mkp MB1         &mkp MB3         &mkp MB2
 //                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
@@ -275,13 +308,13 @@
             bindings = <
 //╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
 //|                |  F7            |  F8            |  F9            |  F12           |                |    |                |                |                |                |                |                |
-  &kp C_MUTE       &kp F7           &kp F8           &kp F9           &kp F12          &kp CAPTURE_1         &bt BT_SEL 2     &msc SCRL_LEFT   &msc SCRL_DOWN   &msc SCRL_UP     &msc SCRL_RIGHT  &kp CAPTURE_3
+  &kp C_MUTE       &kp F7           &kp F8           &kp F9           &kp F12          &kp CAPTURE_1         &bt_to_ipad      &msc SCRL_LEFT   &msc SCRL_DOWN   &msc SCRL_UP     &msc SCRL_RIGHT  &kp CAPTURE_3
 //├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 //|                |  F4            |  F5            |  F6            |  F11           |                |    |                |                |                |                |                |                |
-  &kp C_VOLUME_UP  &kp F4           &kp F5           &kp F6           &kp F11          &kp CAPTURE_2         &bt BT_SEL 1     &mmv MOVE_LEFT   &mmv MOVE_DOWN   &mmv MOVE_UP     &mmv MOVE_RIGHT  &kp C_BRIGHTNESS_INC
+  &kp C_VOLUME_UP  &kp F4           &kp F5           &kp F6           &kp F11          &kp CAPTURE_2         &bt_to_win       &mmv MOVE_LEFT   &mmv MOVE_DOWN   &mmv MOVE_UP     &mmv MOVE_RIGHT  &kp C_BRIGHTNESS_INC
 //├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 //|                |  F1            |  F2            |  F3            |  F10           |                |    |                |                |                |                |                |                |
-  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp CAPTURE_3         &bt BT_SEL 0     &none            &kp LGUI         &kp LCTRL        &kp LALT         &hmr LSHIFT C_BRIGHTNESS_DEC
+  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp CAPTURE_3         &bt_to_mac       &none            &kp LGUI         &kp LCTRL        &kp LALT         &hmr LSHIFT C_BRIGHTNESS_DEC
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
                                                      LOCK             SWITCH_OS        UNLOCK                &mkp MB1         &mkp MB3         &mkp MB2
 //                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
