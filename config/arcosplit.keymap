@@ -8,12 +8,56 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 
-#define L1 1
-#define L2 2
-#define L3 3
+#define MAC_DEFAULT 0
+#define RAISE   1
+#define LOWER   2
+#define ADJUST  3
+#define WIN_DEFAULT 4
+
+#define BT_MAC  0
+#define BT_WIN  1
+#define BT_IPAD 2
+
+#define LEFT_TOP      0  1  2  3  4  5
+#define RIGHT_TOP     6  7  8  9 10 11
+#define LEFT_MID     12 13 14 15 16 17
+#define RIGHT_MID    18 19 20 21 22 23
+#define LEFT_BOTTOM  24 25 26 27 28 29
+#define RIGHT_BOTTOM 30 31 32 33 34 35
+#define LEFT_THUMBS  36 37 38
+#define RIGHT_THUMBS 39 40 41
+#define LEFT_KEYS LEFT_TOP LEFT_MID LEFT_BOTTOM
+#define RIGHT_KEYS RIGHT_TOP RIGHT_MID RIGHT_BOTTOM
+
+&mt {
+    quick-tap-ms = <175>;
+};
 
 / {
     behaviors {
+        hml: home_row_mod_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            require-prior-idle-ms = <150>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            bindings = <&kp>, <&kp>;
+            /* hold-trigger-key-positions = <RIGHT_KEYS>; */
+            /* hold-trigger-on-release; */
+        };
+
+        hmr: home_row_mod_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            require-prior-idle-ms = <150>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            bindings = <&kp>, <&kp>;
+            /* hold-trigger-key-positions = <LEFT_KEYS>; */
+            /* hold-trigger-on-release; */
+        };
         ht_tp: hold_tap_tap_preferred {
             compatible = "zmk,behavior-hold-tap";
             label = "HOLD_TAP_TAP_PREFERRSED";
@@ -25,42 +69,255 @@
         };
     };
 
+    macro {
+        bt_to_mac: bt_to_mac {
+            label = "bt_to_mac_macro";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&to MAC_DEFAULT>, <&bt BT_SEL BT_MAC>;
+        };
+
+        bt_to_win: bt_to_win {
+            label = "bt_to_win_macro";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&to WIN_DEFAULT>, <&bt BT_SEL BT_WIN>;
+        };
+
+        bt_to_ipad: bt_to_ipad {
+            label = "bt_to_ipad_macro";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&to MAC_DEFAULT>, <&bt BT_SEL BT_IPAD>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
+#define LSHORTCUT LGUI
+
+        MAC_default_layer {
             bindings = <
-&kp ESC        &kp Q  &kp W  &kp E     &kp R     &kp T         &kp Y         &kp U    &kp I      &kp O    &kp P      &kp BSPC
-&mt LCTRL TAB  &kp A  &kp S  &kp D     &kp F     &kp G         &kp H         &kp J    &kp K      &kp L    &kp MINUS  &kp BACKSLASH
-&kp LSHFT      &kp Z  &kp X  &kp C     &kp V     &kp B         &kp N         &kp M    &kp COMMA  &kp DOT  &kp SLASH  &kp RSHFT
-                             &kp LGUI  &kp LALT  &lt L1 SPACE  &lt L2 ENTER  &kp DEL  &kp RALT
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|  Q             |  W             |  E             |  R             |  T             |                |    |                |  Y             |  U             |  I             | O              |  P             |
+  &kp Q            &kp W            &kp E            &kp R            &kp T            &mo RAISE             &mo RAISE        &kp Y            &kp U            &kp I            &kp O            &kp P
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  A             |  S             |  D             |  F             |  G             |                |    |                |  H             |  J             |  K             | L              |  ;             |
+  &kp A            &hml LALT S      &hml LCTRL D     &hml LGUI F      &kp G            &mo ADJUST            &mo ADJUST       &kp H            &kp J            &kp K            &kp L            &mt RCTRL SEMI
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  Z             |  X             |  C             |  V             |  B             |                |    |                |  N             |  M             |  ,             | .              |  /             |
+  &hml LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo LOWER             &mo LOWER        &kp N            &kp M            &kp COMMA        &hmr RALT DOT    &hmr RSHIFT SLASH
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &mt RSHIFT SPACE &mo RAISE        &kp RGUI
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
 
-        layer_1 {
+#define MY_N0       KP_N0
+#define MY_N1       KP_N1
+#define MY_N2       KP_N2
+#define MY_N3       KP_N3
+#define MY_N4       KP_N4
+#define MY_N5       KP_N5
+#define MY_N6       KP_N6
+#define MY_N7       KP_N7
+#define MY_N8       KP_N8
+#define MY_N9       KP_N9
+#define MY_PLUS     KP_PLUS
+#define MY_MINUS    KP_MINUS
+#define MY_MULTIPLY KP_MULTIPLY
+#define MY_DIVIDE   KP_DIVIDE
+#define MY_EQUAL    KP_EQUAL
+#define MY_DOT      KP_DOT
+
+        MAC_raise_layer {
             bindings = <
-&kp GRAVE  &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT  &kp CARET       &kp AMPS         &kp STAR          &kp LPAR           &kp RPAR   &trans
-&trans     &kp N1    &kp N2  &kp N3    &kp N4    &kp N5     &kp LEFT_BRACE  &kp RIGHT_BRACE  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp SEMI   &kp SINGLE_QUOTE
-&trans     &kp N6    &kp N7  &kp N8    &kp N9    &kp N0     &kp PLUS        &kp MINUS        &kp ASTERISK      &kp SLASH          &kp EQUAL  &trans
-                             &trans    &trans    &trans     &lt L3 ENTER    &trans           &trans
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|  /             |  7             |  8             |  9             |  -             |                |    |                |                |                |                |                |  -             |
+  &kp MY_DIVIDE    &kp MY_N7        &kp MY_N8        &kp MY_N9        &kp MY_MINUS     &trans                &bootloader      &none            &kp BACKSPACE    &kp DEL          &kp TAB          &kp MINUS
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  *             |  4             |  5             |  5             |  6             |                |    |                |                |                |                |                |                |
+  &kp MY_MULTIPLY  &hml LALT MY_N4  &hml LCTRL MY_N5 &hml LGUI MY_N6  &kp MY_PLUS      &trans                &trans           &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &mt RCTRL ENTER
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  0             |  1             |  2             |  3             |  =             |                |    |                |                |                |                |                |                |
+  &hml LSHIFT MY_N0 &kp MY_N1       &kp MY_N2        &kp MY_N3        &kp MY_EQUAL     &trans                &trans           &kp HOME         &kp PAGE_DOWN    &kp PAGE_UP      &hmr RALT END    &kp RSHIFT
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &kp SPACE        &lt ADJUST MY_DOT &mt LSHORTCUT BACKSPACE &none         &none            &trans
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
 
-        layer_2 {
+        MAC_lower_layer {
             bindings = <
-&kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6        &kp F7    &kp F8    &kp F9  &kp F10    &kp F11  &kp F12
-&none   &none   &none   &none   &none   &none         &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &none    &none
-&none   &none   &none   &none   &none   &none         &none     &none     &none   &none      &none    &none
-                        &trans  &trans  &lt L1 SPACE  &trans    &trans    &trans
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|  ?             |  "             |  !             |                |  ~             |                |    |                |                |  _             |  (             |  )             |  %             |
+  &kp QUESTION     &kp DOUBLE_QUOTES &kp EXCLAMATION &kp BACKSPACE    &kp TILDE        &bootloader           &mo RAISE        &none            &kp UNDERSCORE   &kp LEFT_PARENTHESIS &kp RIGHT_PARENTHESIS &kp PERCENT
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  @             |  '             |  $             |                |  /             |                |    |                |  #             |                |  [             |  ]             |                |
+  &kp AT_SIGN      &kp SINGLE_QUOTE &kp DOLLAR       &kp DELETE       &kp SLASH        &trans                &trans           &kp HASH         &none            &kp LEFT_BRACKET &kp RIGHT_BRACKET &none
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|                |  `             |  ^             |  |             |  \             |                |    |                |  &             |                |  {             |  }             |                |
+  &none            &kp GRAVE        &kp CARET        &kp PIPE         &kp BACKSLASH    &trans                &trans           &kp AMPERSAND    &none            &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp RSHIFT
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &none            &none            &none                 &mt RSHIFT ENTER &mo ADJUST       &trans
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
 
-        layer_3 {
+#define CAPTURE_1 LG(LS(N3))
+#define CAPTURE_2 LG(LS(N4))
+#define CAPTURE_3 LG(LS(N5))
+#define LOCK      &kp LG(LC(Q))
+#define UNLOCK    &studio_unlock
+#define SWITCH_OS &to WIN_DEFAULT
+
+        MAC_adjust_layer {
             bindings = <
-&studio_unlock  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &none   &none   &none   &none  &none  &none
-&none           &none         &none         &none         &none         &none         &none   &none   &none   &none  &none  &none
-&none           &none         &none         &none         &none         &none         &none   &none   &none   &none  &none  &bt BT_CLR
-                                            &trans        &trans        &trans        &trans  &trans  &trans
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|                |  F7            |  F8            |  F9            |  F12           |                |    |                |                |                |                |                |                |
+  &kp C_MUTE       &kp F7           &kp F8           &kp F9           &kp F12          &kp CAPTURE_1         &bt_to_ipad      &msc SCRL_LEFT   &msc SCRL_DOWN   &msc SCRL_UP     &msc SCRL_RIGHT  &kp CAPTURE_3
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|                |  F4            |  F5            |  F6            |  F11           |                |    |                |                |                |                |                |                |
+  &kp C_VOLUME_UP  &kp F4           &kp F5           &kp F6           &kp F11          &kp CAPTURE_2         &bt_to_win       &mmv MOVE_LEFT   &mmv MOVE_DOWN   &mmv MOVE_UP     &mmv MOVE_RIGHT  &kp C_BRIGHTNESS_INC
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|                |  F1            |  F2            |  F3            |  F10           |                |    |                |                |                |                |                |                |
+  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp CAPTURE_3         &bt_to_mac       &none            &kp LGUI         &kp LCTRL        &kp LALT         &hmr LSHIFT C_BRIGHTNESS_DEC
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     LOCK             SWITCH_OS        UNLOCK                &mkp MB1         &mkp MB3         &mkp MB2
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
+            >;
+        };
+
+#undef RAISE
+#undef LOWER
+#undef ADJUST
+#undef LSHORTCUT
+
+#define RAISE  5
+#define LOWER  6
+#define ADJUST 7
+#define LSHORTCUT LCTRL
+
+        WIN_default_layer {
+            bindings = <
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|  Q             |  W             |  E             |  R             |  T             |                |    |                |  Y             |  U             |  I             | O              |  P             |
+  &kp Q            &kp W            &kp E            &kp R            &kp T            &mo RAISE             &mo RAISE        &kp Y            &kp U            &kp I            &kp O            &kp P
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  A             |  S             |  D             |  F             |  G             |                |    |                |  H             |  J             |  K             | L              |  ;             |
+  &kp A            &hml LALT S      &hml LCTRL D     &hml LGUI F      &kp G            &mo ADJUST            &mo ADJUST       &kp H            &kp J            &kp K            &kp L            &mt RCTRL SEMI
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  Z             |  X             |  C             |  V             |  B             |                |    |                |  N             |  M             |  ,             | .              |  /             |
+  &hml LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo LOWER             &mo LOWER        &kp N            &kp M            &kp COMMA        &hmr RALT DOT    &hmr RSHIFT SLASH
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &mt RSHIFT SPACE &mo RAISE        &kp RGUI
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
+            >;
+        };
+
+#undef MY_N0
+#undef MY_N1
+#undef MY_N2
+#undef MY_N3
+#undef MY_N4
+#undef MY_N5
+#undef MY_N6
+#undef MY_N7
+#undef MY_N8
+#undef MY_N9
+#undef MY_PLUS
+#undef MY_MINUS
+#undef MY_MULTIPLY
+#undef MY_DIVIDE
+#undef MY_EQUAL
+#undef MY_DOT
+
+#define MY_N0       N0
+#define MY_N1       N1
+#define MY_N2       N2
+#define MY_N3       N3
+#define MY_N4       N4
+#define MY_N5       N5
+#define MY_N6       N6
+#define MY_N7       N7
+#define MY_N8       N8
+#define MY_N9       N9
+#define MY_PLUS     PLUS
+#define MY_MINUS    MINUS
+#define MY_MULTIPLY ASTERISK
+#define MY_DIVIDE   SLASH
+#define MY_EQUAL    EQUAL
+#define MY_DOT      DOT
+
+        WIN_raise_layer {
+            bindings = <
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|  /             |  7             |  8             |  9             |  -             |                |    |                |                |                |                |                |  -             |
+  &kp MY_DIVIDE    &kp MY_N7        &kp MY_N8        &kp MY_N9        &kp MY_MINUS     &trans                &bootloader      &none            &kp BACKSPACE    &kp DEL          &kp TAB          &kp MINUS
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  *             |  4             |  5             |  5             |  6             |                |    |                |                |                |                |                |                |
+  &kp MY_MULTIPLY  &hml LALT MY_N4  &hml LCTRL MY_N5 &hml LGUI MY_N6  &kp MY_PLUS      &trans                &trans           &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &mt RCTRL ENTER
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  0             |  1             |  2             |  3             |  =             |                |    |                |                |                |                |                |                |
+  &hml LSHIFT MY_N0 &kp MY_N1       &kp MY_N2        &kp MY_N3        &kp MY_EQUAL     &trans                &trans           &kp HOME         &kp PAGE_DOWN    &kp PAGE_UP      &hmr RALT END    &kp RSHIFT
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &kp SPACE        &lt ADJUST MY_DOT &mt LSHORTCUT BACKSPACE &none         &none            &trans
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
+            >;
+        };
+
+        WIN_lower_layer {
+            bindings = <
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|  ?             |  "             |  !             |                |  ~             |                |    |                |                |  _             |  (             |  )             |  %             |
+  &kp QUESTION     &kp DOUBLE_QUOTES &kp EXCLAMATION &kp BACKSPACE    &kp TILDE        &bootloader           &mo RAISE        &none            &kp UNDERSCORE   &kp LEFT_PARENTHESIS &kp RIGHT_PARENTHESIS &kp PERCENT
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  @             |  '             |  $             |                |  /             |                |    |                |  #             |                |  [             |  ]             |                |
+  &kp AT_SIGN      &kp SINGLE_QUOTE &kp DOLLAR       &kp DELETE       &kp SLASH        &trans                &trans           &kp HASH         &none            &kp LEFT_BRACKET &kp RIGHT_BRACKET &none
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|                |  `             |  ^             |  |             |  \             |                |    |                |  &             |                |  {             |  }             |                |
+  &none            &kp GRAVE        &kp CARET        &kp PIPE         &kp BACKSLASH    &trans                &trans           &kp AMPERSAND    &none            &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp RSHIFT
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &none            &none            &none                 &mt RSHIFT ENTER &mo ADJUST       &trans
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
+            >;
+        };
+
+#undef CAPTURE_1
+#undef CAPTURE_2
+#undef CAPTURE_3
+#undef LOCK
+#undef UNLOCK
+#undef SWITCH_OS
+
+#define CAPTURE_1 PRINTSCREEN
+#define CAPTURE_2 LA(PRINTSCREEN)
+#define CAPTURE_3 LG(LS(S))
+#define LOCK      &kp LG(L)
+#define UNLOCK    &kp LC(LA(DELETE))
+#define SWITCH_OS &to MAC_DEFAULT
+
+        WIN_adjust_layer {
+            bindings = <
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|                |  F7            |  F8            |  F9            |  F12           |                |    |                |                |                |                |                |                |
+  &kp C_MUTE       &kp F7           &kp F8           &kp F9           &kp F12          &kp CAPTURE_1         &bt_to_ipad      &msc SCRL_LEFT   &msc SCRL_DOWN   &msc SCRL_UP     &msc SCRL_RIGHT  &kp CAPTURE_3
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|                |  F4            |  F5            |  F6            |  F11           |                |    |                |                |                |                |                |                |
+  &kp C_VOLUME_UP  &kp F4           &kp F5           &kp F6           &kp F11          &kp CAPTURE_2         &bt_to_win       &mmv MOVE_LEFT   &mmv MOVE_DOWN   &mmv MOVE_UP     &mmv MOVE_RIGHT  &kp C_BRIGHTNESS_INC
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|                |  F1            |  F2            |  F3            |  F10           |                |    |                |                |                |                |                |                |
+  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp CAPTURE_3         &bt_to_mac       &none            &kp LGUI         &kp LCTRL        &kp LALT         &hmr LSHIFT C_BRIGHTNESS_DEC
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     LOCK             SWITCH_OS        UNLOCK                &mkp MB1         &mkp MB3         &mkp MB2
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
     };
