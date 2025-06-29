@@ -11,9 +11,46 @@
 #define L1 1
 #define L2 2
 #define L3 3
+#define LEFT_TOP      0  1  2  3  4  5
+#define RIGHT_TOP     6  7  8  9 10 11
+#define LEFT_MID     12 13 14 15 16 17
+#define RIGHT_MID    18 19 20 21 22 23
+#define LEFT_BOTTOM  24 25 26 27 28 29
+#define RIGHT_BOTTOM 30 31 32 33 34 35
+#define LEFT_THUMBS  36 37 38
+#define RIGHT_THUMBS 39 40 41
+#define LEFT_KEYS LEFT_TOP LEFT_MID LEFT_BOTTOM
+#define RIGHT_KEYS RIGHT_TOP RIGHT_MID RIGHT_BOTTOM
+
+&mt {
+    quick-tap-ms = <175>;
+};
 
 / {
     behaviors {
+        hml: home_row_mod_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            require-prior-idle-ms = <150>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            bindings = <&kp>, <&kp>;
+            /* hold-trigger-key-positions = <RIGHT_KEYS>; */
+            /* hold-trigger-on-release; */
+        };
+
+        hmr: home_row_mod_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            require-prior-idle-ms = <150>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            bindings = <&kp>, <&kp>;
+            /* hold-trigger-key-positions = <LEFT_KEYS>; */
+            /* hold-trigger-on-release; */
+        };
         ht_tp: hold_tap_tap_preferred {
             compatible = "zmk,behavior-hold-tap";
             label = "HOLD_TAP_TAP_PREFERRSED";
@@ -30,28 +67,28 @@
 
         default_layer {
             bindings = <
-&kp Q         &kp W       &kp E        &kp R       &kp T    &mo L1        &mo L1            &kp Y     &kp U      &kp I      &kp O         &kp P
-&kp A         &mt LALT S  &mt LCTRL D  &mt LGUI F  &kp G    &mo L3        &mo L3            &kp H     &kp J      &kp K      &kp L         &mt RCTRL SEMI
-&mt LSHIFT Z  &kp X       &kp C        &kp V       &kp B    &mo L2        &mo L2            &kp N     &kp M      &kp COMMA  &mt RALT DOT  &mt RSHIFT SLASH
-                                       &kp ESC     &mo L2   &mt LGUI TAB  &mt RSHIFT SPACE  &mo L1    &kp RGUI
+&kp Q          &kp W        &kp E         &kp R        &kp T    &mo L1         &mo L1             &kp Y     &kp U      &kp I      &kp O          &kp P
+&kp A          &hml LALT S  &hml LCTRL D  &hml LGUI F  &kp G    &mo L3         &mo L3             &kp H     &kp J      &kp K      &kp L          &mt RCTRL SEMI
+&hml LSHIFT Z  &kp X        &kp C         &kp V        &kp B    &mo L2         &mo L2             &kp N     &kp M      &kp COMMA  &hmr RALT DOT  &hmr RSHIFT SLASH
+                                          &kp ESC      &mo L2   &mt LGUI TAB   &mt RSHIFT SPACE   &mo L1    &kp RGUI
             >;
         };
 
         layer_1 {
             bindings = <
-&kp KP_DIVIDE     &kp KP_N7       &kp KP_N8        &kp KP_N9       &kp KP_MINUS   &trans              &trans  &none     &kp BACKSPACE  &kp DEL      &kp TAB       &kp MINUS
-&kp KP_MULTIPLY   &mt LALT KP_N4  &mt LCTRL KP_N5  &mt LGUI KP_N6  &kp KP_PLUS    &trans              &trans  &kp LEFT  &kp DOWN       &kp UP       &kp RIGHT     &mt RCTRL ENTER
-&mt LSHIFT KP_N0  &kp KP_N1       &kp KP_N2        &kp KP_N3       &kp EQUAL      &trans              &trans  &kp HOME  &kp PAGE_DOWN  &kp PAGE_UP  &mt RALT END  &kp RSHIFT
-                                                   &kp SPACE       &lt L3 KP_DOT  &mt LGUI BACKSPACE  &none   &none     &trans
+&kp KP_DIVIDE      &kp KP_N7        &kp KP_N8         &kp KP_N9        &kp KP_MINUS   &trans               &bootloader  &none     &kp BACKSPACE  &kp DEL      &kp TAB        &kp MINUS
+&kp KP_MULTIPLY    &hml LALT KP_N4  &hml LCTRL KP_N5  &hml LGUI KP_N6  &kp KP_PLUS    &trans               &trans       &kp LEFT  &kp DOWN       &kp UP       &kp RIGHT      &mt RCTRL ENTER
+&hml LSHIFT KP_N0  &kp KP_N1        &kp KP_N2         &kp KP_N3        &kp EQUAL      &trans               &trans       &kp HOME  &kp PAGE_DOWN  &kp PAGE_UP  &hmr RALT END  &kp RSHIFT
+                                                      &kp SPACE        &lt L3 KP_DOT  &mt LGUI BACKSPACE   &none        &none     &trans
             >;
         };
 
         layer_2 {
             bindings = <
-&kp QUESTION  &kp DOUBLE_QUOTES  &kp EXCLAMATION  &kp BACKSPACE  &kp TILDE      &trans   &trans            &none          &kp UNDERSCORE  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PERCENT
-&kp AT_SIGN   &kp SINGLE_QUOTE   &kp DOLLAR       &kp DELETE     &kp SLASH      &trans   &trans            &kp HASH       &none           &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &none
-&none         &kp GRAVE          &kp CARET        &kp PIPE       &kp BACKSLASH  &trans   &trans            &kp AMPERSAND  &none           &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp RSHIFT
-                                                  &none          &none          &none    &mt RSHIFT ENTER  &mo L3         &trans
+&kp QUESTION  &kp DOUBLE_QUOTES  &kp EXCLAMATION  &kp BACKSPACE  &kp TILDE      &bootloader   &trans             &none          &kp UNDERSCORE  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PERCENT
+&kp AT_SIGN   &kp SINGLE_QUOTE   &kp DOLLAR       &kp DELETE     &kp SLASH      &trans        &trans             &kp HASH       &none           &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &none
+&none         &kp GRAVE          &kp CARET        &kp PIPE       &kp BACKSLASH  &trans        &trans             &kp AMPERSAND  &none           &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp RSHIFT
+                                                  &none          &none          &none         &mt RSHIFT ENTER   &mo L3         &trans
             >;
         };
 
@@ -59,7 +96,7 @@
             bindings = <
 &kp C_MUTE         &kp F7  &kp F8  &kp F9         &kp F12         &kp LG(LS(N3))   &bt BT_SEL 2  &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT     &kp LG(LS(N5))
 &kp C_VOLUME_UP    &kp F4  &kp F5  &kp F6         &kp F11         &kp LG(LS(N4))   &bt BT_SEL 1  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT     &kp C_BRIGHTNESS_INC
-&kp C_VOLUME_DOWN  &kp F1  &kp F2  &kp F3         &kp F10         &kp LG(LS(N5))   &bt BT_SEL 0  &none           &kp LGUI        &kp LCTRL     &kp LALT            &mt LSHIFT C_BRIGHTNESS_DEC
+&kp C_VOLUME_DOWN  &kp F1  &kp F2  &kp F3         &kp F10         &kp LG(LS(N5))   &bt BT_SEL 0  &none           &kp LGUI        &kp LCTRL     &kp LALT            &hmr LSHIFT C_BRIGHTNESS_DEC
                                    &kp LG(LC(Q))  &studio_unlock  &kp LOCKING_NUM  &mkp MB1      &mkp MB3        &mkp MB2
             >;
         };
