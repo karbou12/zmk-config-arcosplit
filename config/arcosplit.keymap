@@ -115,7 +115,7 @@
 //|  Z             |  X             |  C             |  V             |  B             |                |    |                |  N             |  M             |  ,             | .              |  /             |
   &hml LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo LOWER             &mo LOWER        &kp N            &kp M            &kp COMMA        &hmr RALT DOT    &hmr RSHIFT SLASH
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
-                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &mt RSHIFT SPACE &mo RAISE        &kp RGUI
+                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &hmr RSHIFT SPACE &mo RAISE       &kp RGUI
 //                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
@@ -166,7 +166,7 @@
 //|                |  `             |  ^             |  |             |  \             |                |    |                |  &             |                |  {             |  }             |                |
   &none            &kp GRAVE        &kp CARET        &kp PIPE         &kp BACKSLASH    &trans                &trans           &kp AMPERSAND    &none            &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp RSHIFT
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
-                                                     &none            &none            &none                 &mt RSHIFT ENTER &mo ADJUST       &trans
+                                                     &none            &none            &none                 &hmr RSHIFT ENTER &mo ADJUST      &trans
 //                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
@@ -217,7 +217,7 @@
 //|  Z             |  X             |  C             |  V             |  B             |                |    |                |  N             |  M             |  ,             | .              |  /             |
   &hml LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo LOWER             &mo LOWER        &kp N            &kp M            &kp COMMA        &hmr RALT DOT    &hmr RSHIFT SLASH
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
-                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &mt RSHIFT SPACE &mo RAISE        &kp RGUI
+                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &hmr RSHIFT SPACE &mo RAISE       &kp RGUI
 //                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
@@ -285,7 +285,7 @@
 //|                |  `             |  ^             |  |             |  \             |                |    |                |  &             |                |  {             |  }             |                |
   &none            &kp GRAVE        &kp CARET        &kp PIPE         &kp BACKSLASH    &trans                &trans           &kp AMPERSAND    &none            &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp RSHIFT
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
-                                                     &none            &none            &none                 &mt RSHIFT ENTER &mo ADJUST       &trans
+                                                     &none            &none            &none                 &hmr RSHIFT ENTER &mo ADJUST      &trans
 //                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
