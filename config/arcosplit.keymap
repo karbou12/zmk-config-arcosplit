@@ -29,6 +29,32 @@
 #define LEFT_KEYS LEFT_TOP LEFT_MID LEFT_BOTTOM
 #define RIGHT_KEYS RIGHT_TOP RIGHT_MID RIGHT_BOTTOM
 
+#define LSHORTCUT   LGUI
+
+#define MY_N0       KP_N0
+#define MY_N1       KP_N1
+#define MY_N2       KP_N2
+#define MY_N3       KP_N3
+#define MY_N4       KP_N4
+#define MY_N5       KP_N5
+#define MY_N6       KP_N6
+#define MY_N7       KP_N7
+#define MY_N8       KP_N8
+#define MY_N9       KP_N9
+#define MY_PLUS     KP_PLUS
+#define MY_MINUS    KP_MINUS
+#define MY_MULTIPLY KP_MULTIPLY
+#define MY_DIVIDE   KP_DIVIDE
+#define MY_EQUAL    KP_EQUAL
+#define MY_DOT      KP_DOT
+
+#define CAPTURE_1   LG(LS(N3))
+#define CAPTURE_2   LG(LS(N4))
+#define CAPTURE_3   LG(LS(N5))
+#define LOCK        &kp LG(LC(Q))
+#define UNLOCK      &studio_unlock
+#define SWITCH_OS   &to WIN_DEFAULT
+
 &mt {
     quick-tap-ms = <175>;
 };
@@ -101,8 +127,6 @@
     keymap {
         compatible = "zmk,keymap";
 
-#define LSHORTCUT LGUI
-
         MAC_default_layer {
             bindings = <
 //╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
@@ -119,23 +143,6 @@
 //                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
-
-#define MY_N0       KP_N0
-#define MY_N1       KP_N1
-#define MY_N2       KP_N2
-#define MY_N3       KP_N3
-#define MY_N4       KP_N4
-#define MY_N5       KP_N5
-#define MY_N6       KP_N6
-#define MY_N7       KP_N7
-#define MY_N8       KP_N8
-#define MY_N9       KP_N9
-#define MY_PLUS     KP_PLUS
-#define MY_MINUS    KP_MINUS
-#define MY_MULTIPLY KP_MULTIPLY
-#define MY_DIVIDE   KP_DIVIDE
-#define MY_EQUAL    KP_EQUAL
-#define MY_DOT      KP_DOT
 
         MAC_raise_layer {
             bindings = <
@@ -171,13 +178,6 @@
             >;
         };
 
-#define CAPTURE_1 LG(LS(N3))
-#define CAPTURE_2 LG(LS(N4))
-#define CAPTURE_3 LG(LS(N5))
-#define LOCK      &kp LG(LC(Q))
-#define UNLOCK    &studio_unlock
-#define SWITCH_OS &to WIN_DEFAULT
-
         MAC_adjust_layer {
             bindings = <
 //╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
@@ -200,27 +200,10 @@
 #undef ADJUST
 #undef LSHORTCUT
 
-#define RAISE  5
-#define LOWER  6
-#define ADJUST 7
+#define RAISE     5
+#define LOWER     6
+#define ADJUST    7
 #define LSHORTCUT LCTRL
-
-        WIN_default_layer {
-            bindings = <
-//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
-//|  Q             |  W             |  E             |  R             |  T             |                |    |                |  Y             |  U             |  I             | O              |  P             |
-  &kp Q            &kp W            &kp E            &kp R            &kp T            &mo RAISE             &mo RAISE        &kp Y            &kp U            &kp I            &kp O            &kp P
-//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
-//|  A             |  S             |  D             |  F             |  G             |                |    |                |  H             |  J             |  K             | L              |  ;             |
-  &kp A            &hml LALT S      &hml LCTRL D     &hml LGUI F      &kp G            &mo ADJUST            &mo ADJUST       &kp H            &kp J            &kp K            &kp L            &mt RCTRL SEMI
-//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
-//|  Z             |  X             |  C             |  V             |  B             |                |    |                |  N             |  M             |  ,             | .              |  /             |
-  &hml LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo LOWER             &mo LOWER        &kp N            &kp M            &kp COMMA        &hmr RALT DOT    &hmr RSHIFT SLASH
-//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
-                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &hmr RSHIFT SPACE &mo RAISE       &kp RGUI
-//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
-            >;
-        };
 
 #undef MY_N0
 #undef MY_N1
@@ -256,6 +239,39 @@
 #define MY_EQUAL    EQUAL
 #define MY_DOT      DOT
 
+#undef CAPTURE_1
+#undef CAPTURE_2
+#undef CAPTURE_3
+#undef LOCK
+#undef UNLOCK
+#undef SWITCH_OS
+
+#define CAPTURE_1 PRINTSCREEN
+#define CAPTURE_2 LA(PRINTSCREEN)
+#define CAPTURE_3 LG(LS(S))
+#define LOCK      &kp LG(L)
+#define UNLOCK    &kp LC(LA(DELETE))
+#define SWITCH_OS &to MAC_DEFAULT
+
+        WIN_default_layer {
+            bindings = <
+//╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
+//|  Q             |  W             |  E             |  R             |  T             |                |    |                |  Y             |  U             |  I             | O              |  P             |
+  &kp Q            &kp W            &kp E            &kp R            &kp T            &mo RAISE             &mo RAISE        &kp Y            &kp U            &kp I            &kp O            &kp P
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  A             |  S             |  D             |  F             |  G             |                |    |                |  H             |  J             |  K             | L              |  ;             |
+  &kp A            &hml LALT S      &hml LCTRL D     &hml LGUI F      &kp G            &mo ADJUST            &mo ADJUST       &kp H            &kp J            &kp K            &kp L            &mt RCTRL SEMI
+//├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
+//|  Z             |  X             |  C             |  V             |  B             |                |    |                |  N             |  M             |  ,             | .              |  /             |
+  &hml LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo LOWER             &mo LOWER        &kp N            &kp M            &kp COMMA        &hmr RALT DOT    &hmr RSHIFT SLASH
+//╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼
+                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &hmr RSHIFT SPACE &mo RAISE       &kp RGUI
+//                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
+            >;
+        };
+
+
+
         WIN_raise_layer {
             bindings = <
 //╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮    ╭────────────────┬────────────────┬────────────────┬────────────────┬────────────────┬────────────────╮
@@ -289,20 +305,6 @@
 //                                                   ╰────────────────┴────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼
             >;
         };
-
-#undef CAPTURE_1
-#undef CAPTURE_2
-#undef CAPTURE_3
-#undef LOCK
-#undef UNLOCK
-#undef SWITCH_OS
-
-#define CAPTURE_1 PRINTSCREEN
-#define CAPTURE_2 LA(PRINTSCREEN)
-#define CAPTURE_3 LG(LS(S))
-#define LOCK      &kp LG(L)
-#define UNLOCK    &kp LC(LA(DELETE))
-#define SWITCH_OS &to MAC_DEFAULT
 
         WIN_adjust_layer {
             bindings = <
