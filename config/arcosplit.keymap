@@ -28,6 +28,7 @@
 #define RIGHT_THUMBS 39 40 41
 #define LEFT_KEYS LEFT_TOP LEFT_MID LEFT_BOTTOM
 #define RIGHT_KEYS RIGHT_TOP RIGHT_MID RIGHT_BOTTOM
+#define THUMBS LEFT_THUMBS RIGHT_THUMBS
 
 #define LSHORTCUT   LGUI
 
@@ -58,34 +59,44 @@
 #define LAYER(s) MAC_##s##_layer
 
 &mt {
-    quick-tap-ms = <140>;
+    quick-tap-ms = <180>;
 };
 
 / {
     behaviors {
+        mtb: mt_balanced {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <180>;
+            bindings = <&kp>, <&kp>;
+        };
+
         hml: home_row_mod_left {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            /* require-prior-idle-ms = <150>; */
-            tapping-term-ms = <180>;
-            quick-tap-ms = <140>;
+            require-prior-idle-ms = <150>;
+            tapping-term-ms = <400>;
+            quick-tap-ms = <180>;
             bindings = <&kp>, <&kp>;
-            /* hold-trigger-key-positions = <RIGHT_KEYS>; */
-            /* hold-trigger-on-release; */
+            hold-trigger-key-positions = <THUMBS RIGHT_KEYS>;
+            hold-trigger-on-release;
         };
 
         hmr: home_row_mod_right {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            /* require-prior-idle-ms = <150>; */
-            tapping-term-ms = <180>;
-            quick-tap-ms = <140>;
+            require-prior-idle-ms = <150>;
+            tapping-term-ms = <400>;
+            quick-tap-ms = <180>;
             bindings = <&kp>, <&kp>;
-            /* hold-trigger-key-positions = <LEFT_KEYS>; */
-            /* hold-trigger-on-release; */
+            hold-trigger-key-positions = <THUMBS LEFT_KEYS>;
+            hold-trigger-on-release;
         };
+
         ht_tp: hold_tap_tap_preferred {
             compatible = "zmk,behavior-hold-tap";
             label = "HOLD_TAP_TAP_PREFERRSED";
@@ -148,9 +159,9 @@
   &kp A            &hml LALT S      &hml LCTRL D     &hml LGUI F      &kp G            &mo ADJUST            &mo ADJUST       &kp H            &kp J            &kp K            &kp L            &mt RCTRL SEMI
 //├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 //|  Z             |  X             |  C             |  V             |  B             |                |    |                |  N             |  M             |  ,             | .              |  /             |
-  &hml LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo LOWER             &mo LOWER        &kp N            &kp M            &kp COMMA        &hmr RALT DOT    &hmr RSHIFT SLASH
+  &mtb LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo LOWER             &mo LOWER        &kp N            &kp M            &kp COMMA        &mtb RALT DOT    &mtb RSHIFT SLASH
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┴────────────────┴────────────────╯
-                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &hmr RSHIFT SPACE &mo RAISE       &kp RGUI
+                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &mtb RSHIFT SPACE &mo RAISE       &kp RGUI
 //                                                   ╰────────────────┴────────────────┴────────────────╯    ╰────────────────┴────────────────┴────────────────╯
             >;
         };
@@ -165,7 +176,7 @@
   &kp MY_MULTIPLY  &hml LALT MY_N4  &hml LCTRL MY_N5 &hml LGUI MY_N6  &kp MY_PLUS      &trans                &trans           &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &mt RCTRL ENTER
 //├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 //|  0             |  1             |  2             |  3             |  =             |                |    |                |                |                |                |                |                |
-  &hml LSHIFT MY_N0 &kp MY_N1       &kp MY_N2        &kp MY_N3        &kp MY_EQUAL     &trans                &trans           &kp HOME         &kp PAGE_DOWN    &kp PAGE_UP      &hmr RALT END    &kp RSHIFT
+  &mtb LSHIFT MY_N0 &kp MY_N1       &kp MY_N2        &kp MY_N3        &kp MY_EQUAL     &trans                &trans           &kp HOME         &kp PAGE_DOWN    &kp PAGE_UP      &mtb RALT END    &kp RSHIFT
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┴────────────────┴────────────────╯
                                                      &kp SPACE        &lt ADJUST MY_DOT &mt LSHORTCUT BACKSPACE &none         &none            &trans
 //                                                   ╰────────────────┴────────────────┴────────────────╯    ╰────────────────┴────────────────┴────────────────╯
@@ -184,7 +195,7 @@
 //|                |  `             |  ^             |  |             |  \             |                |    |                |  &             |                |  {             |  }             |                |
   &none            &kp GRAVE        &kp CARET        &kp PIPE         &kp BACKSLASH    &trans                &trans           &kp AMPERSAND    &none            &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp RSHIFT
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┴────────────────┴────────────────╯
-                                                     &none            &none            &none                 &hmr RSHIFT ENTER &mo ADJUST      &trans
+                                                     &none            &none            &none                 &mtb RSHIFT ENTER &mo ADJUST      &trans
 //                                                   ╰────────────────┴────────────────┴────────────────╯    ╰────────────────┴────────────────┴────────────────╯
             >;
         };
@@ -199,7 +210,7 @@
   &kp C_VOLUME_UP  &kp F4           &kp F5           &kp F6           &kp F11          &kp CAPTURE_2         &bt_to_win       &mmv MOVE_LEFT   &mmv MOVE_DOWN   &mmv MOVE_UP     &mmv MOVE_RIGHT  &kp C_BRIGHTNESS_INC
 //├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 //|                |  F1            |  F2            |  F3            |  F10           |                |    |                |                |                |                |                |                |
-  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp CAPTURE_3         &bt_to_mac       &none            &kp LGUI         &kp LCTRL        &kp LALT         &hmr LSHIFT C_BRIGHTNESS_DEC
+  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp CAPTURE_3         &bt_to_mac       &none            &kp LGUI         &kp LCTRL        &kp LALT         &mtb LSHIFT C_BRIGHTNESS_DEC
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┴────────────────┴────────────────╯
                                                      LOCK             SWITCH_OS        UNLOCK                &mkp MB1         &mkp MB3         &mkp MB2
 //                                                   ╰────────────────┴────────────────┴────────────────╯    ╰────────────────┴────────────────┴────────────────╯
@@ -277,9 +288,9 @@
   &kp A            &hml LALT S      &hml LCTRL D     &hml LGUI F      &kp G            &mo ADJUST            &mo ADJUST       &kp H            &kp J            &kp K            &kp L            &mt RCTRL SEMI
 //├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 //|  Z             |  X             |  C             |  V             |  B             |                |    |                |  N             |  M             |  ,             | .              |  /             |
-  &hml LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo LOWER             &mo LOWER        &kp N            &kp M            &kp COMMA        &hmr RALT DOT    &hmr RSHIFT SLASH
+  &mtb LSHIFT Z    &kp X            &kp C            &kp V            &kp B            &mo LOWER             &mo LOWER        &kp N            &kp M            &kp COMMA        &mtb RALT DOT    &mtb RSHIFT SLASH
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┴────────────────┴────────────────╯
-                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &hmr RSHIFT SPACE &mo RAISE       &kp RGUI
+                                                     &kp ESC          &mo LOWER        &mt LSHORTCUT TAB     &mtb RSHIFT SPACE &mo RAISE       &kp RGUI
 //                                                   ╰────────────────┴────────────────┴────────────────╯    ╰────────────────┴────────────────┴────────────────╯
             >;
         };
@@ -294,7 +305,7 @@
   &kp MY_MULTIPLY  &hml LALT MY_N4  &hml LCTRL MY_N5 &hml LGUI MY_N6  &kp MY_PLUS      &trans                &trans           &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &mt RCTRL ENTER
 //├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 //|  0             |  1             |  2             |  3             |  =             |                |    |                |                |                |                |                |                |
-  &hml LSHIFT MY_N0 &kp MY_N1       &kp MY_N2        &kp MY_N3        &kp MY_EQUAL     &trans                &trans           &kp HOME         &kp PAGE_DOWN    &kp PAGE_UP      &hmr RALT END    &kp RSHIFT
+  &mtb LSHIFT MY_N0 &kp MY_N1       &kp MY_N2        &kp MY_N3        &kp MY_EQUAL     &trans                &trans           &kp HOME         &kp PAGE_DOWN    &kp PAGE_UP      &mtb RALT END    &kp RSHIFT
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┴────────────────┴────────────────╯
                                                      &kp SPACE        &lt ADJUST MY_DOT &mt LSHORTCUT BACKSPACE &none         &none            &trans
 //                                                   ╰────────────────┴────────────────┴────────────────╯    ╰────────────────┴────────────────┴────────────────╯
@@ -313,7 +324,7 @@
 //|                |  `             |  ^             |  |             |  \             |                |    |                |  &             |                |  {             |  }             |                |
   &none            &kp GRAVE        &kp CARET        &kp PIPE         &kp BACKSLASH    &trans                &trans           &kp AMPERSAND    &none            &kp LEFT_BRACE   &kp RIGHT_BRACE  &kp RSHIFT
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┴────────────────┴────────────────╯
-                                                     &none            &none            &none                 &hmr RSHIFT ENTER &mo ADJUST      &trans
+                                                     &none            &none            &none                 &mtb RSHIFT ENTER &mo ADJUST      &trans
 //                                                   ╰────────────────┴────────────────┴────────────────╯    ╰────────────────┴────────────────┴────────────────╯
             >;
         };
@@ -328,7 +339,7 @@
   &kp C_VOLUME_UP  &kp F4           &kp F5           &kp F6           &kp F11          &kp CAPTURE_2         &bt_to_win       &mmv MOVE_LEFT   &mmv MOVE_DOWN   &mmv MOVE_UP     &mmv MOVE_RIGHT  &kp C_BRIGHTNESS_INC
 //├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤    ├────────────────┼────────────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 //|                |  F1            |  F2            |  F3            |  F10           |                |    |                |                |                |                |                |                |
-  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp CAPTURE_3         &bt_to_mac       &none            &kp LGUI         &kp LCTRL        &kp LALT         &hmr LSHIFT C_BRIGHTNESS_DEC
+  &kp C_VOLUME_DOWN &kp F1          &kp F2           &kp F3           &kp F10          &kp CAPTURE_3         &bt_to_mac       &none            &kp LGUI         &kp LCTRL        &kp LALT         &mtb LSHIFT C_BRIGHTNESS_DEC
 //╰────────────────┴────────────────┴────────────────┼────────────────┼────────────────┤────────────────┼    ╰────────────────┴────────────────┴────────────────┼────────────────┴────────────────┴────────────────╯
                                                      LOCK             SWITCH_OS        UNLOCK                &mkp MB1         &mkp MB3         &mkp MB2
 //                                                   ╰────────────────┴────────────────┴────────────────╯    ╰────────────────┴────────────────┴────────────────╯
